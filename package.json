@@ -1,0 +1,27 @@
+{
+  "name": "funutil",
+  "version": "0.0.0",
+  "description": "Functional utility functions.",
+  "main": "fun.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+	  "chai": "^1.9.1",
+	  "mocha": "^1.18.2"
+  },
+  "scripts": {
+    "test": "mocha --reporter nyan"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Zirak/funutils.git"
+  },
+  "author": "Zirak",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/Zirak/funutils/issues"
+  },
+  "homepage": "https://github.com/Zirak/funutils"
+}

@@ -1,0 +1,164 @@
+* Hello.
+
+Have you ever done this:
+
+#+BEGIN_SRC javascript
+array.map(function (obj) {
+	return obj[key];
+});
+#+END_SRC
+
+Or this:
+
+#+BEGIN_SRC javascript
+array.filter(function (x) {
+	return !func(x);
+});
+#+END_SRC
+
+Or maybe this:
+
+#+BEGIN_SRC javascript
+array.reduce(function (ret, x) {
+	return ret - x;
+});
+#+END_SRC
+
+Those are annoying to do. This module provides you these functions.
+
+** Usage
+
+Obligatory overly simplistic and contrived example:
+
+#+BEGIN_SRC javascript
+var fun = require('funutils');
+
+var arr = [4, 17, 2, 809];
+var isEven = function (x) { return !(x % 2); };
+
+arr.filter(fun.not(isEven)) // [17, 809]
+   .reduce(fun.sub)         // -792
+#+END_SRC
+
+* Documentation
+
+** General usefulness
+
+*** id
+
+=id(x) -> x=
+
+Returns the first argument.
+
+*** const
+
+=const(c) -> () -> c=
+
+Returns a function which returns a constant.
+
+*** exists
+
+=exists(x) -> x !== null && x !== undefined=
+
+Returns whether the argument is not null or undefined. Basically, tells us if we can access a property on it safely. Used internally.
+
+** Object access
+
+*** prop
+
+=prop(key) -> (obj) -> obj[key]=
+
+Returns a function which gets a certain key from the first argument.
+
+#+BEGIN_SRC javascript
+var arr = ['This is some string', ['oh look', 'an array'], { length : 4 }];
+arr.map(fun.prop('length')); //[19, 2, 4]
+#+END_SRC
+
+*** safeProp
+
+=safeProp(key) -> (obj) -> obj[key] if fun.exists(obj) else obj=
+
+We all know that =null= that gets in somehow. Yes, we all have that step where we deal with that pesky =null=, and we all got mad that our libraries didn't handle it correctly.
+
+This is a separate method for some reason. Should it be part of =prop=? Maybe.
+
+*** invoke
+
+=invoke(method, ...args) -> (obj) -> obj[method](...args)=
+
+Calls =method= on every received object.
+
+#+BEGIN_SRC javascript
+var arr = ['FOO', 'BAZINGA', 'SoMeThIng'];
+arr.map(fun.invoke('toLowerCase')); // ["foo", "bazinga", "something"]
+
+arr.map(fun.invoke('match', /[A-Z]+/g)); // [["FOO"], ["BAZINGA"], ["S","M","T","I"]]
+#+END_SRC
+
+** Argument handling
+
+*** flipArgs
+
+=flipArgs(func) -> (...args) -> func.apply(this, ...args.reverse())=
+
+Flips the order of arguments around. Useful with [[#sub][sub]] and the likes.
+
+** Boolean Logic
+
+*** not
+
+=not(func) -> (...args) -> !func.apply(this, ...args)=
+
+Negates the return value of a function call.
+
+*** and
+
+=and(f, g) -> (...args) -> f.apply(this, ...args) && g.apply(this, ...args)=
+
+&&s the result of applying two functions on the arguments.
+
+Support for n-arity is planned if justification is given.
+
+*** or
+
+=or(f, g) -> (...args) -> f.apply(this, ...args) || g.apply(this, ...args)=
+
+You have one guess.
+
+** Math
+
+Obligatory.
+
+*** add
+
+=add(a, b) -> a + b=
+
+*** sub
+
+=sub(a, b) -> a - b=
+
+*** mult
+
+=mult(a, b) -> a * b=
+
+*** div
+
+=div(a, b) -> a / b=
+
+*** floorDiv
+=floorDiv(a, b) -> Math.floor(a / b)=
+
+Maybe I was too easy. Could've been done with =.map(fun.div).map(Math.floor)=. Oh well.
+
+*** mod
+
+=mod(a, b) -> a % b=
+
+* License
+This program is free software. It comes without any warranty, to the extent
+permitted by applicable law. You can redistribute it and/or modify it under the
+terms of the Do What The Fuck You Want To Public License, Version 2, as
+published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+
+Basically, WTFPL with a no warranty clause. I probably fucked this section up.
