@@ -53,8 +53,8 @@ var fun = {
             var args = [];
 
             for (var i = 0; i < arguments.length; i += 1) {
-				args.unshift(arguments[i]);
-			}
+                args.unshift(arguments[i]);
+            }
 
             return func.apply(this, args);
         };
@@ -106,5 +106,5 @@ var fun = {
 };
 
 if (typeof module !== 'undefined') {
-	module.exports = fun;
+    module.exports = fun;
 }

@@ -8,8 +8,8 @@
   },
   "dependencies": {},
   "devDependencies": {
-	  "chai": "^1.9.1",
-	  "mocha": "^1.18.2"
+    "chai": "^1.9.1",
+    "mocha": "^1.18.2"
   },
   "scripts": {
     "test": "mocha --reporter nyan"
